@@ -13,6 +13,7 @@
     }
     .container{
       position: relative;
+      min-height: 1000px;
       margin: 40px 40px;
     }
     .footer{
@@ -69,7 +70,7 @@
     template: '<div class="container">' +
       '<Stick ' +
         'v-bind:list="list"' +
-        ':columnSpacing="10"' +
+        '@onSrollEnd="loadMore"' +
       '>' +
         '<template slot-scope="scope">' + 
           '<div class="card">' +
@@ -84,44 +85,12 @@
     methods: {
       add: function () {
         this.list.push({"_id":"4567","id":"98765","title":"新加的","cover":"http://static.bh-lay.com/blog/village-in-city/城中村仰视.jpg","time_show":"1557158617263","author":"剧中人","intro":"小剧将会在接下来的时间里，去寻找、发现、并拍摄合肥市现存的城中村。其实城市变化很快，只是我们身在变化之中感受不强而已。我希望可以借助于影像的力量，凝固住一个个城中村最后的身姿。"})
+      },
+      loadMore: function () {
+        console.log('need load more ！')
       }
     }
   })
-</script>
-<script type="text/javascript">
-
-// //定义瀑布流组件
-// var stick = new Stick({
-//   container: document.getElementById('container'),
-//   column_width: 200,
-//   column_gap: 10,
-//   load_spacing: 200,
-//   onNeedMore: loadMore
-// });
-// //加载第一页
-// loadMore();
-
-// /**
-//  * 模拟ajax加载，提供假数据
-//  **/
-// var loadTime = 0;
-// function loadMore(){
-//   //模拟加载完毕
-//   if(++loadTime >= 5){
-//     return
-//   }
-//   //模拟ajax延迟
-//   setTimeout(function(){
-//     list = [
-//       {},{},{},{},{},{},{},{},
-//       {},{},{},{},{},{},{},{}
-//     ];
-//     list.forEach(function(item) {
-//       var html= '<div class="item" style="height:' + Math.floor(Math.random() * 250 + 150) + 'px">';
-//       stick.addItem(html, item.cover);
-//     });
-//   },300);
-// }
 </script>
 </body>
 </html>

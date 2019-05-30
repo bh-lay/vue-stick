@@ -1,26 +1,28 @@
 import template from './template.html'
+import './style.less'
 import { getImgSize, getScrollTop } from './utils.js'
 
 var component = {
 	props: {
 		list: {
-			// type: Array,
-			// default: []
+			type: Array,
+			default: []
 		},
 		columnWidth: {
 			type: Number,
-			default: 300
+			default: 280
+		},
+		animationClass: {
+			type: String,
+			default: 'stick-fade-in'
 		},
 		loadTriggerDistance: {
 			type: Number,
-			default: 200
-		},
-		loadMoreFn: {
-			type: Function
+			default: 1000
 		},
 		columnSpacing: {
 			type: Number,
-			default: 20
+			default: 10
 		}
 	},
 	data: function () {
@@ -88,15 +90,18 @@ var component = {
 			})
 		},
 		scrollListener: function () {
-			var now = new Date().getTime();
-			if (now - this.lastTriggerScrollTime > 500 && (getScrollTop() + window.innerHeight >= document.body.scrollHeight - this.loadTriggerDistance)) {
-				this.loadMoreFn && this.loadMoreFn();
+			var now = new Date().getTime()
+
+			if (now - this.lastTriggerScrollTime > 500 && (getScrollTop() + window.innerHeight + this.loadTriggerDistance >= document.body.scrollHeight)) {
+				this.$emit('onSrollEnd')
 				this.lastTriggerScrollTime = now;
 			}
 		},
 		syncList: function (list) {
 			var me = this
-			let listInScreen = this.localList.map(item => item.data)
+			var listInScreen = this.localList.map(function (item) {
+				return item.data
+			})
 			this.list.forEach(function (item) {
 				if (listInScreen.indexOf(item) === -1) {
 					me.addItem(item, item.cover)
@@ -142,9 +147,9 @@ var component = {
 			widget.style.top = top
 			widget.style.left = columnIndex * (this.columnWidthInUse + this.columnSpacing)
 
-			node.classList.add('fadeInLeft');
+			node.classList.add(this.animationClass)
 			setTimeout(function () {
-				node.classList.remove('fadeInLeft');
+				node.classList.remove(this.animationClass);
 			}, 1000);
 			this.lastRowBottomPosition[columnIndex] = top + widgetHeight;
 			this.outerHeight = Math.max.apply(null, this.lastRowBottomPosition) + this.columnSpacing
