@@ -3,6 +3,10 @@ A  waterfall flow component based on vue.js
 
 一款基于 vue.js 的瀑布流组件。
 
+### **demo:** [https://bh-lay.github.io/vue-stick/demo/](https://bh-lay.github.io/vue-stick/demo/)
+
+
+
 ## 如何引入
 
 您可以下载 `dist` 目录下的产出文件至您的项目中，用任何您希望使用的方式引入。
