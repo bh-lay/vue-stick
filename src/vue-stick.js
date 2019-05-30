@@ -37,22 +37,15 @@ var component = {
 			lastRowBottomPosition: [],
 			lastTriggerScrollTime: 0,
 
-			widgetIDMax: 0
+			widgetIDMax: 0,
+			resizeTimer: null
 		}
 	},
 	template: template,
 	mounted: function () {
-		var me = this;
 
 		this.lastRowBottomPosition = [];
 
-		var resizeDelay;
-		this.resizeListener = function () {
-			clearTimeout(resizeDelay);
-			resizeDelay = setTimeout(function () {
-				me.refresh();
-			}, 500);
-		};
 		document.addEventListener('scroll', this.scrollListener)
 		window.addEventListener('resize', this.resizeListener)
 		this.buildLayout();
@@ -85,7 +78,9 @@ var component = {
 				me.lastRowBottomPosition = []
 				me.localList.forEach(function (widget) {
 					var node = me.$refs['widget-' + widget.id][0]
-					me.fixItemPosition(node, widget);
+					if (widget.prepared) {
+						me.fixItemPosition(node, widget)
+					}
 				})
 			})
 		},
@@ -97,7 +92,14 @@ var component = {
 				this.lastTriggerScrollTime = now;
 			}
 		},
-		syncList: function (list) {
+		resizeListener: function () {
+			var me = this
+			clearTimeout(this.resizeTimer);
+			this.resizeTimer = setTimeout(function () {
+				me.refresh();
+			}, 500);
+		},
+		syncList: function () {
 			var me = this
 			var listInScreen = this.localList.map(function (item) {
 				return item.data
@@ -107,6 +109,15 @@ var component = {
 					me.addItem(item, item.cover)
 				}
 			})
+			if (this.list.length < this.localList.length) {
+				console.log('有节点被删了！')
+				for (var index = this.localList.length - 1; index >= 0; index--) {
+					if (this.list.indexOf(this.localList[index].data) === -1) {
+						this.localList.splice(index, 1)
+					}
+				}
+				me.refresh()
+			}
 		},
 		addItem: function (item, cover) {
 			var widget = {
@@ -118,6 +129,7 @@ var component = {
 					width: this.columnWidthInUse,
 					visibility: 'hidden'
 				},
+				prepared: false,
 				data: item
 			};
 			var me = this
@@ -125,12 +137,17 @@ var component = {
 			this.localList.push(widget)
 			getImgSize(cover, function () {
 				var node = me.$refs['widget-' + widget.id][0]
+				// 标记已准备好
+				widget.prepared = true
 				me.fixItemPosition(node, widget);
 			});
 		},
 		fixItemPosition: function (node, widget) {
 			var columnIndex;
 			var top = 0;
+			if (!node || !widget) {
+				return
+			}
 			var widgetHeight = node.clientHeight
 			if (this.lastRowBottomPosition.length < this.columnCount) {
 				//第一排item
@@ -153,16 +170,16 @@ var component = {
 			}, 1000);
 			this.lastRowBottomPosition[columnIndex] = top + widgetHeight;
 			this.outerHeight = Math.max.apply(null, this.lastRowBottomPosition) + this.columnSpacing
-		},
-		destroy: function () {
-			document.removeEventListener('scroll', this.scrollListener)
-			window.removeEventListener('resize', this.resizeListener)
 		}
 	},
 	watch: {
 		list: function () {
 			this.syncList()
 		}
+	},
+	beforeDestroy: function () {
+		document.removeEventListener('scroll', this.scrollListener)
+		window.removeEventListener('resize', this.resizeListener)
 	}
 }
 
