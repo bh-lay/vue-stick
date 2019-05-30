@@ -186,7 +186,7 @@ var component = {
 
 export default {
 	component,
-	install(Vue) {
+	install: function (Vue) {
 		Vue.component('Stick', component);
 	}
 }
