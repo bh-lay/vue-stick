@@ -8,6 +8,10 @@ var component = {
 			type: Array,
 			default: []
 		},
+		imgKey: {
+			type: String,
+			default: ''
+		},
 		columnWidth: {
 			type: Number,
 			default: 280
@@ -106,7 +110,7 @@ var component = {
 			})
 			this.list.forEach(function (item) {
 				if (listInScreen.indexOf(item) === -1) {
-					me.addItem(item, item.cover)
+					me.addItem(item)
 				}
 			})
 			if (this.list.length < this.localList.length) {
@@ -119,7 +123,7 @@ var component = {
 				me.refresh()
 			}
 		},
-		addItem: function (item, cover) {
+		addItem: function (item) {
 			var widget = {
 				id: this.widgetIDMax++,
 				style: {
@@ -135,7 +139,7 @@ var component = {
 			var me = this
 
 			this.localList.push(widget)
-			getImgSize(cover, function () {
+			getImgSize(item[this.imgKey], function () {
 				var node = me.$refs['widget-' + widget.id][0]
 				// 标记已准备好
 				widget.prepared = true

@@ -119,16 +119,17 @@
 				'<button @click="add">增加</button>' +
 				'<button @click="remove">随机删除</button>' +
 				'<Stick ' +
-				'v-bind:list="list"' +
-				'@onSrollEnd="loadMore"' +
-				'>' +
-				'<template slot-scope="scope">' +
-				'<div class="card">' +
-				'<img :src="scope.data.cover" v-if="scope.data.cover" />' +
-				'<h2>{{scope.data.title}}</h2>' +
-				'<p>{{scope.data.intro}}</p>' +
-				'</div>' +
-				'</template>' +
+						':list="list"' +
+						'imgKey="cover"' +
+						'@onSrollEnd="loadMore"' +
+					'>' +
+					'<template slot-scope="scope">' +
+						'<div class="card">' +
+							'<img :src="scope.data.cover" v-if="scope.data.cover" />' +
+							'<h2>{{scope.data.title}}</h2>' +
+							'<p>{{scope.data.intro}}</p>' +
+						'</div>' +
+					'</template>' +
 				'</Stick>' +
 				'<button @click="add">增加</button>' +
 				'<button @click="remove">随机删除</button>' +

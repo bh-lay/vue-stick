@@ -5,7 +5,7 @@
   "main": "dist/vue-stick.umd.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bh-lay/vue-sticky.git"
+    "url": "git+https://github.com/bh-lay/vue-stick.git"
   },
   "keywords": [
     "vue",
@@ -14,9 +14,9 @@
   "author": "剧中人",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bh-lay/vue-sticky/issues"
+    "url": "https://github.com/bh-lay/vue-stick/issues"
   },
-  "homepage": "https://github.com/bh-lay/vue-sticky#readme",
+  "homepage": "https://github.com/bh-lay/vue-stick#readme",
   "devDependencies": {
     "npm-run-all": "^4.1.5",
     "rollup": "^1.5.0",
