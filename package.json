@@ -1,0 +1,39 @@
+{
+  "name": "vue-stick",
+  "version": "1.0.0",
+  "description": "基于 vue 的瀑布流组件",
+  "main": "dist/vue-stick.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bh-lay/vue-sticky.git"
+  },
+  "keywords": [
+    "vue",
+    "stick"
+  ],
+  "author": "剧中人",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bh-lay/vue-sticky/issues"
+  },
+  "homepage": "https://github.com/bh-lay/vue-sticky#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "rollup": "^1.5.0",
+    "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-terser": "^4.0.4",
+    "serve": "^10.1.2",
+    "date-fns": "^1.30.1",
+    "rollup-plugin-less": "^1.1.2",
+    "rollup-plugin-string": "^3.0.0"
+  },
+  "scripts": {
+    "build": "npm run build:es && npm run build:umd",
+    "build:es": "rollup -c -f es -o ./dist/vue-stick.es.js",
+    "build:umd": "rollup -c -f umd -o ./dist/vue-stick.umd.js",
+    "watch": "rollup -c -w -f umd -o ./dist/vue-stick.umd.js",
+    "dev": "npm-run-all --parallel start watch",
+    "start": "serve public"
+  }
+}
