@@ -33,8 +33,7 @@ function getScrollTop(){
   return Math.max(document.documentElement.scrollTop, document.body.scrollTop);
 }
 
-
-let Stick = Vue.component('button-counter', {
+let component = {
   props: {
     list: {
       // type: Array,
@@ -204,6 +203,12 @@ let Stick = Vue.component('button-counter', {
       window.removeEventListener('resize',this.resizeListener)
     }
   }
-});
+}
 
-export default Stick
+
+export default {
+  component,
+  install (Vue) {
+    Vue.component('Stick', component);
+  }
+}

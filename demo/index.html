@@ -47,6 +47,7 @@
 <script src="vue.min.js"></script>
 <script type="text/javascript" src="../dist/vue-stick.umd.js"></script>
 <script>
+  // Vue.use(Stick)
   // 需要编译器
   new Vue({
     el: '#app',
@@ -64,7 +65,9 @@
         {"_id":"5a354eaf29755ea750e25438","author":"","cover":"http://static.bh-lay.com/blog/odeon-shoot/odeon-1.jpg","id":"160603b5cff","intro":"这次拍摄也只是小剧的处女作，并没有多少经验作指导，仅仅是根据自己的思路临场做的尝试。好在团队的小伙伴比较耐心，不厌其烦地微调位置，经过反复拍摄，最终完成了此次拍摄。","time_show":"1513442991333","title":"记一次团队主题航拍"}
       ]
     },
-    components: {Stick},
+    components: {
+      Stick: Stick.component
+    },
     template: '<div class="container"><Stick v-bind:list="list"><template slot-scope="scope">' + 
       '<div class="card">' +
         '<img :src="scope.data.cover" v-if="scope.data.cover" />' +
