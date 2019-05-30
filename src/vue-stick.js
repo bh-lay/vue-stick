@@ -1,7 +1,7 @@
 import template from './template.html'
 import { getImgSize, getScrollTop } from './utils.js'
 
-let component = {
+var component = {
 	props: {
 		list: {
 			// type: Array,
@@ -54,7 +54,6 @@ let component = {
 		document.addEventListener('scroll', this.scrollListener)
 		window.addEventListener('resize', this.resizeListener)
 		this.buildLayout();
-		console.log(this)
 		this.syncList()
 	},
 	methods: {
@@ -153,6 +152,11 @@ let component = {
 		destroy: function () {
 			document.removeEventListener('scroll', this.scrollListener)
 			window.removeEventListener('resize', this.resizeListener)
+		}
+	},
+	watch: {
+		list: function () {
+			this.syncList()
 		}
 	}
 }

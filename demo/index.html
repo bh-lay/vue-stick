@@ -19,8 +19,6 @@
       height: 200px;
       background: #555;
     }
-  </style>
-  <style type="text/css">
     .card {
       background: #fff;
     }
@@ -68,13 +66,26 @@
     components: {
       Stick: Stick.component
     },
-    template: '<div class="container"><Stick v-bind:list="list"><template slot-scope="scope">' + 
-      '<div class="card">' +
-        '<img :src="scope.data.cover" v-if="scope.data.cover" />' +
-        '<h2>{{scope.data.title}}</h2>' +
-        '<p>{{scope.data.intro}}</p>' +
-      '</div>' +
-    '</template></Stick></div>'
+    template: '<div class="container">' +
+      '<Stick ' +
+        'v-bind:list="list"' +
+        ':columnSpacing="10"' +
+      '>' +
+        '<template slot-scope="scope">' + 
+          '<div class="card">' +
+            '<img :src="scope.data.cover" v-if="scope.data.cover" />' +
+            '<h2>{{scope.data.title}}</h2>' +
+            '<p>{{scope.data.intro}}</p>' +
+          '</div>' +
+        '</template>' +
+      '</Stick>' +
+      '<button @click="add">增加</button>' +
+    '</div>',
+    methods: {
+      add: function () {
+        this.list.push({"_id":"4567","id":"98765","title":"新加的","cover":"http://static.bh-lay.com/blog/village-in-city/城中村仰视.jpg","time_show":"1557158617263","author":"剧中人","intro":"小剧将会在接下来的时间里，去寻找、发现、并拍摄合肥市现存的城中村。其实城市变化很快，只是我们身在变化之中感受不强而已。我希望可以借助于影像的力量，凝固住一个个城中村最后的身姿。"})
+      }
+    }
   })
 </script>
 <script type="text/javascript">
