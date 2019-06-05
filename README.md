@@ -96,3 +96,6 @@ new Vue({
 | animationClass      | String | -    | 'stick-fade-in' |      | 卡片插入时的动画class |
 
 **注1：** 因瀑布流的特殊性，卡片高度可能会因为内容变化而变化。一般来说受图片异步加载影响较多，因此这里需要通过 `imgKey` 告诉组件，图片所在字段。
+
+——————
+项目由原生瀑布流组件 [stick](https://github.com/bh-lay/stick) 演绎而成。
