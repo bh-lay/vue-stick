@@ -8,10 +8,6 @@ var component = {
 			type: Array,
 			default: []
 		},
-		imgKey: {
-			type: String,
-			default: ''
-		},
 		columnWidth: {
 			type: Number,
 			default: 280
@@ -92,7 +88,7 @@ var component = {
 			var now = new Date().getTime()
 
 			if (now - this.lastTriggerScrollTime > 500 && (getScrollTop() + window.innerHeight + this.loadTriggerDistance >= document.body.scrollHeight)) {
-				this.$emit('onSrollEnd')
+				this.$emit('onScrollEnd')
 				this.lastTriggerScrollTime = now;
 			}
 		},
@@ -139,12 +135,17 @@ var component = {
 			var me = this
 
 			this.localList.push(widget)
-			getImgSize(item[this.imgKey], function () {
-				var node = me.$refs['widget-' + widget.id][0]
-				// 标记已准备好
-				widget.prepared = true
-				me.fixItemPosition(node, widget);
-			});
+			this.$nextTick(() => {
+				var widgetNode = me.$refs['widget-' + widget.id][0]
+				var imgNode = widgetNode.querySelector('img')
+				var imgSrc = imgNode ? imgNode.getAttribute('src') : ''
+				
+				getImgSize(imgSrc, function () {
+					// 标记已准备好
+					widget.prepared = true
+					me.fixItemPosition(widgetNode, widget);
+				});
+			})
 		},
 		fixItemPosition: function (node, widget) {
 			var columnIndex;

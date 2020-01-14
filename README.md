@@ -41,8 +41,7 @@ new Vue({
 ```vue
 <Stick
 	:list="list"
-	imgKey="cover"
-	@onSrollEnd="loadMore"
+	@onScrollEnd="loadMore"
 	>
   <template slot-scope="scope">
 		<div class="card">
@@ -86,13 +85,12 @@ new Vue({
 
 ## 参数
 
-| 参数                | 类型   | 必填 |     默认值      |      | 解释                  |
-| ------------------- | ------ | ---- | :-------------: | ---- | :-------------------- |
-| list                | Array  | 必填 |       []        |      | 瀑布流数据列表        |
-| imgKey              | String | -    |       ''        |      | 图片对应字段名[注1]   |
-| columnWidth         | Number | -    |       280       |      | 卡片宽度              |
-| columnSpacing       | Number | -    |       10        |      | 卡片间距              |
-| loadTriggerDistance | Number | -    |      1000       |      | 滚动加载距离边界值    |
-| animationClass      | String | -    | 'stick-fade-in' |      | 卡片插入时的动画class |
+| 参数                | 类型   | 必填 |     默认值      | 解释                  |
+| ------------------- | ------ | ---- | :-------------: | :-------------------- |
+| list                | Array  | 必填 |       []        | 瀑布流数据列表        |
+| columnWidth         | Number | -    |       280       | 卡片宽度              |
+| columnSpacing       | Number | -    |       10        | 卡片间距              |
+| loadTriggerDistance | Number | -    |      1000       | 滚动加载距离边界值    |
+| animationClass      | String | -    | 'stick-fade-in' | 卡片插入时的动画class |
 
-**注1：** 因瀑布流的特殊性，卡片高度可能会因为内容变化而变化。一般来说受图片异步加载影响较多，因此这里需要通过 `imgKey` 告诉组件，图片所在字段。
+ 因瀑布流的特殊性，卡片高度可能会因为内容变化而变化。一般来说受图片异步加载影响较多，这一只考虑不惧内只有一张高度不变的图片。
