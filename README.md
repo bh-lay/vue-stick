@@ -93,4 +93,7 @@ new Vue({
 | loadTriggerDistance | Number | -    |      1000       | 滚动加载距离边界值    |
 | animationClass      | String | -    | 'stick-fade-in' | 卡片插入时的动画class |
 
- 因瀑布流的特殊性，卡片高度可能会因为内容变化而变化。一般来说受图片异步加载影响较多，这一只考虑不惧内只有一张高度不变的图片。
+
+因瀑布流的特殊性，卡片高度可能会因为内容变化而变化。一般来说受图片异步加载影响较多，这里只考虑 widget 内只有一张高度不变的图片。
+
+该项目由原生瀑布流组件 [stick](https://github.com/bh-lay/stick) 演绎而成。
