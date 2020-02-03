@@ -101,23 +101,25 @@ var component = {
 		},
 		syncList: function () {
 			var me = this
+			var listInProps = this.list
 			var listInScreen = this.localList.map(function (item) {
 				return item.data
 			})
-			this.list.forEach(function (item) {
+			// 查找增量数据
+			listInProps.forEach(function (item) {
 				if (listInScreen.indexOf(item) === -1) {
 					me.addItem(item)
 				}
 			})
-			if (this.list.length < this.localList.length) {
-				console.log('有节点被删了！')
-				for (var index = this.localList.length - 1; index >= 0; index--) {
-					if (this.list.indexOf(this.localList[index].data) === -1) {
-						this.localList.splice(index, 1)
-					}
+			// 逆序查找被删除的数据
+			var hasDeletedData = false
+			for (var index = listInScreen.length - 1; index >= 0; index--) {
+				if (listInProps.indexOf(listInScreen[index]) === -1) {
+					hasDeletedData = true
+					this.localList.splice(index, 1)
 				}
-				me.refresh()
 			}
+			hasDeletedData && me.refresh()
 		},
 		addItem: function (item) {
 			var widget = {

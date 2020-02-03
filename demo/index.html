@@ -131,6 +131,7 @@
 							'<img :src="scope.data.cover" v-if="scope.data.cover" />' +
 							'<h2>{{scope.data.title}}</h2>' +
 							'<p>{{scope.data.intro}}</p>' +
+							'<button @click="deleteItem(scope.data)">删除</button>' +
 						'</div>' +
 					'</template>' +
 				'</Stick>' +
@@ -141,8 +142,8 @@
 				'</div>' +
 			'</div>',
 			methods: {
-				remove: function () {
-					let index = Math.floor((this.list.length - 1) * Math.random())
+				deleteItem: function (data) {
+					var index = this.list.indexOf(data)
 					this.list.splice(index, 1)
 				},
 				loadMore: function () {
