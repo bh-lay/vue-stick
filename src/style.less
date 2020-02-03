@@ -11,7 +11,11 @@
 
 .vue-stick-outer {
   position: relative;
+  .vue-stick-item {
+    transition: .5s
+  }
   .stick-fade-in {
+    transition: 0s;
     animation: stickFadeIn 0.5s ease both;
   }
 }

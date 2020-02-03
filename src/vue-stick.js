@@ -1,4 +1,3 @@
-import template from './template.html'
 import './style.less'
 import { getImgSize, getScrollTop } from './utils.js'
 
@@ -41,11 +40,43 @@ var component = {
 			resizeTimer: null
 		}
 	},
-	template: template,
+	render: function (createElement) {
+		var me = this
+		return createElement(
+			'div',
+			{
+				class: ['vue-stick-outer'],
+				ref: 'stickOuter',
+				style: {
+					height: this.outerHeight + 'px'
+				}
+			},
+			this.localList.map(function (item) {
+				return createElement(
+					'div',
+					{
+						class: ['vue-stick-item'],
+						ref: 'widget-' + item.id,
+						key: item.id,
+						style: {
+							position: item.style.position,
+							visibility: item.style.visibility,
+							width: Math.round(item.style.width) + 'px',
+							top: Math.round(item.style.top) + 'px',
+							left: Math.round(item.style.left) + 'px'
+						}
+					},
+					[
+						me.$scopedSlots.default({
+							data: item.data
+						})
+					]
+				)
+			})
+		)
+	},
 	mounted: function () {
-
 		this.lastRowBottomPosition = [];
-
 		document.addEventListener('scroll', this.scrollListener)
 		window.addEventListener('resize', this.resizeListener)
 		this.buildLayout();
@@ -77,7 +108,7 @@ var component = {
 			this.$nextTick(function () {
 				me.lastRowBottomPosition = []
 				me.localList.forEach(function (widget) {
-					var node = me.$refs['widget-' + widget.id][0]
+					var node = me.$refs['widget-' + widget.id]
 					if (widget.prepared) {
 						me.fixItemPosition(node, widget)
 					}
@@ -122,6 +153,7 @@ var component = {
 			hasDeletedData && me.refresh()
 		},
 		addItem: function (item) {
+			var me = this
 			var widget = {
 				id: this.widgetIDMax++,
 				style: {
@@ -133,25 +165,28 @@ var component = {
 				},
 				prepared: false,
 				data: item
-			};
-			var me = this
+			}
 
 			this.localList.push(widget)
-			this.$nextTick(() => {
-				var widgetNode = me.$refs['widget-' + widget.id][0]
+			this.$nextTick(function () {
+				var widgetNode = me.$refs['widget-' + widget.id]
 				var imgNode = widgetNode.querySelector('img')
 				var imgSrc = imgNode ? imgNode.getAttribute('src') : ''
 				
 				getImgSize(imgSrc, function () {
 					// 标记已准备好
 					widget.prepared = true
-					me.fixItemPosition(widgetNode, widget);
+					widgetNode.classList.add(me.animationClass)
+					setTimeout(function () {
+						widgetNode.classList.remove(me.animationClass)
+					}, 1000)
+					me.fixItemPosition(widgetNode, widget)
 				});
 			})
 		},
 		fixItemPosition: function (node, widget) {
-			var columnIndex;
-			var top = 0;
+			var columnIndex
+			var top = 0
 			if (!node || !widget) {
 				return
 			}
@@ -171,10 +206,6 @@ var component = {
 			widget.style.top = top
 			widget.style.left = columnIndex * (this.columnWidthInUse + this.columnSpacing)
 
-			node.classList.add(this.animationClass)
-			setTimeout(function () {
-				node.classList.remove(this.animationClass);
-			}, 1000);
 			this.lastRowBottomPosition[columnIndex] = top + widgetHeight;
 			this.outerHeight = Math.max.apply(null, this.lastRowBottomPosition) + this.columnSpacing
 		}
