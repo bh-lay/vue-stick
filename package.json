@@ -1,6 +1,6 @@
 {
   "name": "vue-stick",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "基于 vue 的瀑布流组件",
   "main": "dist/vue-stick.umd.js",
   "repository": {
