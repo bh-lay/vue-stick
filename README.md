@@ -4,6 +4,7 @@ A  waterfall flow component based on vue.js
 一款基于 vue.js 的瀑布流组件。
 
 ### **demo:** [https://bh-lay.github.io/vue-stick/demo/](https://bh-lay.github.io/vue-stick/demo/)
+### **实例 :** [http://bh-lay.com/blog](http://bh-lay.com/blog)
 
 
 
