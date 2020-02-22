@@ -87,9 +87,8 @@ var component = {
 		buildLayout: function () {
 			var width = this.$refs.stickOuter.clientWidth
 			// 增加尺寸检测，避免不必要的重绘，增强界面稳定性
-			console.log(width, this.outerWidth, width === this.outerWidth)
 			if (width === this.outerWidth) {
-				return
+				return false
 			}
 			this.outerWidth = width
 			this.lastRowBottomPosition = [];
@@ -99,12 +98,16 @@ var component = {
 			} else {
 				this.columnWidthInUse = (width + this.columnSpacing) / this.columnCount - this.columnSpacing
 			}
-
+			return true
 		},
-		refresh: function () {
+		// 增加强制更新标识
+		refresh: function (forceRefresh) {
 			var me = this
-			this.buildLayout();
-
+			var isLayoutChanged = this.buildLayout()
+			// 布局未变化，且不要求强制更新，则阻止更新操作
+			if (!isLayoutChanged && !forceRefresh) {
+				return
+			}
 			this.localList.forEach(function (widget) {
 				widget.style.visibility = 'hidden'
 			})
@@ -153,7 +156,7 @@ var component = {
 					this.localList.splice(index, 1)
 				}
 			}
-			hasDeletedData && me.refresh()
+			hasDeletedData && me.refresh(true)
 		},
 		addItem: function (item) {
 			var me = this
