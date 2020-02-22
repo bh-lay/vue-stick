@@ -11,9 +11,10 @@
 
 .vue-stick-outer {
   position: relative;
-  .vue-stick-item {
-    transition: .5s
-  }
+  // 为保证尺寸计算正确，切忌 width 响应动画
+  // .vue-stick-item {
+    // transition: top,left .5s
+  // }
   .stick-fade-in {
     transition: 0s;
     animation: stickFadeIn 0.5s ease both;

@@ -61,7 +61,7 @@ var component = {
 						style: {
 							position: item.style.position,
 							visibility: item.style.visibility,
-							width: Math.round(item.style.width) + 'px',
+							width: Math.round(me.columnWidthInUse) + 'px',
 							top: Math.round(item.style.top) + 'px',
 							left: Math.round(item.style.left) + 'px'
 						}
@@ -85,7 +85,6 @@ var component = {
 	methods: {
 		buildLayout: function () {
 			var width = this.$refs.stickOuter.clientWidth;
-			// this.localList = [];
 			this.lastRowBottomPosition = [];
 			this.columnCount = Math.max(Math.floor((width + this.columnSpacing) / (this.columnWidth + this.columnSpacing)), 1);
 			if (this.columnCount === 1) {
@@ -100,9 +99,6 @@ var component = {
 			this.buildLayout();
 
 			this.localList.forEach(function (widget) {
-				widget.style.top = 0
-				widget.style.left = 0
-				widget.style.width = me.columnWidthInUse
 				widget.style.visibility = 'hidden'
 			})
 			this.$nextTick(function () {
@@ -206,7 +202,7 @@ var component = {
 			widget.style.top = top
 			widget.style.left = columnIndex * (this.columnWidthInUse + this.columnSpacing)
 
-			this.lastRowBottomPosition[columnIndex] = top + widgetHeight;
+			this.lastRowBottomPosition[columnIndex] = top + widgetHeight
 			this.outerHeight = Math.max.apply(null, this.lastRowBottomPosition) + this.columnSpacing
 		}
 	},
