@@ -27,6 +27,7 @@ var component = {
 	data: function () {
 		return {
 			count: 0,
+			outerWidth: -1,
 			outerHeight: 200,
 
 			columnWidthInUse: 0,
@@ -84,7 +85,13 @@ var component = {
 	},
 	methods: {
 		buildLayout: function () {
-			var width = this.$refs.stickOuter.clientWidth;
+			var width = this.$refs.stickOuter.clientWidth
+			// 增加尺寸检测，避免不必要的重绘，增强界面稳定性
+			console.log(width, this.outerWidth, width === this.outerWidth)
+			if (width === this.outerWidth) {
+				return
+			}
+			this.outerWidth = width
 			this.lastRowBottomPosition = [];
 			this.columnCount = Math.max(Math.floor((width + this.columnSpacing) / (this.columnWidth + this.columnSpacing)), 1);
 			if (this.columnCount === 1) {
