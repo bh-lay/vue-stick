@@ -16,7 +16,7 @@ A  waterfall flow component based on vue.js
 也可以通过 npm 安装。
 
 ```bash
-npm install -D vue-stick
+npm install -s vue-stick
 ```
 
 引入 `vue-stick` 之后，您可以选择安装为 Vue 全局模块，也可以局部使用。
@@ -95,8 +95,8 @@ new Vue({
 | animationClass      | String | -    | 'stick-fade-in' | 卡片插入时的动画class |
 
 
-因瀑布流的特殊性，卡片高度可能会因为内容变化而变化。
-
-一般来说，影响卡片高度的为图片异步加载，这里只考虑卡片内只有一张图片的情况。
-
-该项目由原生瀑布流组件 [stick](https://github.com/bh-lay/stick) 演绎而成。
+> 说明：
+>
+> 因瀑布流的特殊性，请尽可能保证卡片內布局的稳定性。为响应可能的高度变化，本组件会延迟到第一张图片加载完成后再渲染。
+>
+> 该项目由原生瀑布流组件 [stick](https://github.com/bh-lay/stick) 演绎而成。
